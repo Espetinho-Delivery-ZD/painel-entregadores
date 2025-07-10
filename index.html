@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Controle de Entregadores - Base Zé Doca</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 20px;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input[type="text"], input[type="number"] {
+      padding: 10px;
+      width: calc(100% - 22px);
+      margin-bottom: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px 0;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 5px 0;
+      padding: 8px;
+      background-color: #f1f1f1;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ajudou {
+      color: green;
+      font-weight: bold;
+    }
+
+    .sorteado {
+      color: blue;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Controle de Entregadores</h1>
+
+    <input type="text" id="nomeInput" placeholder="Digite seu nome"/>
+    <button onclick="confirmarPresenca()">Confirmar Presença</button>
+
+    <h3>Confirmados:</h3>
+    <ul id="listaConfirmados"></ul>
+
+    <h3>Definir número total de vagas:</h3>
+    <input type="number" id="vagasInput" placeholder="Ex: 10" min="1"/>
+    <button onclick="sortearEntregadores()">Sortear Restantes</button>
+
+    <h3>Selecionados para o dia:</h3>
+    <ul id="listaSelecionados"></ul>
+  </div>
+
+  <script>
+    const confirmados = [];
+    const ajudaram = [];
+    const selecionados = [];
+
+    function confirmarPresenca() {
+      const nome = document.getElementById("nomeInput").value.trim();
+      if (nome && !confirmados.includes(nome)) {
+        confirmados.push(nome);
+        atualizarLista();
+        document.getElementById("nomeInput").value = '';
+      }
+    }
+
+    function marcarAjudou(nome) {
+      if (!ajudaram.includes(nome)) {
+        ajudaram.push(nome);
+        atualizarLista();
+      }
+    }
+
+    function atualizarLista() {
+      const lista = document.getElementById("listaConfirmados");
+      lista.innerHTML = "";
+      confirmados.forEach(nome => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          ${nome} 
+          <span>
+            ${ajudaram.includes(nome) ? '<span class="ajudou">✅ Ajudou</span>' 
+            : `<button onclick="marcarAjudou('${nome}')">Marcar como ajudou</button>`}
+          </span>
+        `;
+        lista.appendChild(li);
+      });
+    }
+
+    function sortearEntregadores() {
+      const vagas = parseInt(document.getElementById("vagasInput").value);
+      if (isNaN(vagas) || vagas < 1) {
+        alert("Defina um número válido de vagas.");
+        return;
+      }
+
+      const listaFinal = [...ajudaram]; // Já entram direto
+      const restantes = confirmados.filter(n => !ajudaram.includes(n));
+
+      while (listaFinal.length < vagas && restantes.length > 0) {
+        const i = Math.floor(Math.random() * restantes.length);
+        listaFinal.push(restantes.splice(i, 1)[0]);
+      }
+
+      selecionados.length = 0;
+      listaFinal.forEach(n => selecionados.push(n));
+
+      mostrarSelecionados();
+    }
+
+    function mostrarSelecionados() {
+      const ul = document.getElementById("listaSelecionados");
+      ul.innerHTML = "";
+      selecionados.forEach(nome => {
+        const li = document.createElement("li");
+        li.innerHTML = `${nome} ${ajudaram.includes(nome) ? '<span class="ajudou">(Ajudou)</span>' : '<span class="sorteado">(Sorteado)</span>'}`;
+        ul.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
