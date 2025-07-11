@@ -197,33 +197,35 @@
       });
     }
 
-    function gerarMensagemConvocacao() {
-      const quantidade = parseInt(document.getElementById("voluntariosInput").value);
-      const div = document.getElementById("mensagemConvocacao");
+   function gerarMensagemConvocacao() {
+  const quantidade = parseInt(document.getElementById("voluntariosInput").value);
+  const div = document.getElementById("mensagemConvocacao");
 
-      if (isNaN(quantidade) || quantidade < 1) {
-        div.innerHTML = "<strong>Por favor, digite um número válido de voluntários.</strong>";
-        return;
-      }
+  if (isNaN(quantidade) || quantidade < 1) {
+    div.innerHTML = "<strong>Por favor, digite um número válido de voluntários.</strong>";
+    return;
+  }
 
-      const mensagem = `
-📣 CONVOCAÇÃO DE VOLUNTÁRIOS – WL TRANSPORTES
+  const mensagem = 
+`📣 *CONVOCAÇÃO DE VOLUNTÁRIOS – WL TRANSPORTES*
 
 Bom dia, pessoal!
 
-Hoje vamos precisar de ${quantidade} entregadores voluntários para ajudar na separação da carga, assim que ela chegar.
+Hoje vamos precisar de *${quantidade} entregadores voluntários* para ajudar na *separação da carga*, assim que ela chegar.
 
-⚠️ A ajuda é voluntária e não é obrigatória, mas lembrando que:
+⚠️ A ajuda é *voluntária* e *não é obrigatória*, mas lembrando que:
 
-✅ Quem vier ajudar terá prioridade para rodar hoje.
+✅ *Quem vier ajudar terá prioridade para rodar hoje.*
 📦 A escala final depende da quantidade de pacotes que chegar.
 
-Se puder vir ajudar, responda aqui no grupo ou venha direto à base quando a carga chegar.
+Se puder vir ajudar, responda aqui no grupo ou venha direto à base.
 
-Contamos com a força de vocês! 💪🚚
-      `;
-      div.textContent = mensagem;
-    }
+Contamos com a força de vocês! 💪🚚`;
+
+  // Mostra como texto puro pronto para copiar
+  div.innerHTML = `<textarea style="width:100%; height:200px; border-radius:6px;">${mensagem}</textarea>`;
+}
+
 
     function gerarMensagemFinal() {
       const div = document.getElementById("mensagemFinal");
