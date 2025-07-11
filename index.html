@@ -3,27 +3,35 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Controle de Entregadores - Base Zé Doca</title>
+  <title>WL Transportes - Escala de Entregadores</title>
+  <link rel="icon" type="image/png" href="logo.png">
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f4f4f4;
-      margin: 20px;
+      background-color: #1e1e1e;
+      color: #fff;
+      margin: 0;
       padding: 0;
-    }
-
-    h1 {
-      text-align: center;
-      color: #333;
     }
 
     .container {
       max-width: 750px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
+      margin: 30px auto;
+      background: #2b2b2b;
+      padding: 25px;
       border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    }
+
+    h1, h3 {
+      text-align: center;
+      color: #e10600;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 20px;
+      width: 200px;
     }
 
     input[type="text"], input[type="number"] {
@@ -38,14 +46,14 @@
       padding: 10px 20px;
       margin: 5px 0;
       border: none;
-      background-color: #007bff;
+      background-color: #e10600;
       color: white;
       border-radius: 6px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #0056b3;
+      background-color: #b30000;
     }
 
     ul {
@@ -56,7 +64,7 @@
     li {
       margin: 5px 0;
       padding: 8px;
-      background-color: #f1f1f1;
+      background-color: #3b3b3b;
       border-radius: 6px;
       display: flex;
       justify-content: space-between;
@@ -64,26 +72,34 @@
     }
 
     .ajudou {
-      color: green;
+      color: #00e676;
       font-weight: bold;
     }
 
     .sorteado {
-      color: blue;
+      color: #2196f3;
       font-weight: bold;
     }
 
     #mensagemConvocacao, #mensagemFinal {
       margin-top: 15px;
-      background: #e0f7fa;
-      padding: 10px;
+      background: #333;
+      padding: 15px;
       border-radius: 6px;
       white-space: pre-line;
+      border-left: 4px solid #e10600;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #444;
+      margin: 20px 0;
     }
   </style>
 </head>
 <body>
   <div class="container">
+    <img src="logo.png" alt="Logo WL Transportes" class="logo"/>
     <h1>Controle de Entregadores</h1>
 
     <input type="text" id="nomeInput" placeholder="Digite seu nome"/>
@@ -157,7 +173,7 @@
         return;
       }
 
-      const listaFinal = [...ajudaram]; // Já entram direto
+      const listaFinal = [...ajudaram];
       const restantes = confirmados.filter(n => !ajudaram.includes(n));
 
       while (listaFinal.length < vagas && restantes.length > 0) {
@@ -191,18 +207,18 @@
       }
 
       const mensagem = `
-📣 CONVOCAÇÃO DE VOLUNTÁRIOS – BASE ZÉ DOCA
+📣 CONVOCAÇÃO DE VOLUNTÁRIOS – WL TRANSPORTES
 
 Bom dia, pessoal!
 
 Hoje vamos precisar de ${quantidade} entregadores voluntários para ajudar na separação da carga, assim que ela chegar.
 
-⚠️ A ajuda é *voluntária* e não é obrigatória, mas lembrando que:
+⚠️ A ajuda é voluntária e não é obrigatória, mas lembrando que:
 
-✅ *Quem vier ajudar terá prioridade para rodar hoje.*
+✅ Quem vier ajudar terá prioridade para rodar hoje.
 📦 A escala final depende da quantidade de pacotes que chegar.
 
-Quem puder vir ajudar, responda aqui no grupo ou venha direto à base quando a carga chegar.
+Se puder vir ajudar, responda aqui no grupo ou venha direto à base quando a carga chegar.
 
 Contamos com a força de vocês! 💪🚚
       `;
@@ -220,13 +236,13 @@ Contamos com a força de vocês! 💪🚚
       const nomesFormatados = selecionados.map((n, i) => `${i + 1}. ${n}`).join('\n');
 
       const mensagemFinal = `
-📦 ENTREGADORES ESCALADOS PARA HOJE:
+📦 ENTREGADORES ESCALADOS PARA HOJE – WL TRANSPORTES:
 
 ${nomesFormatados}
 
 Por favor, estejam atentos à separação e à saída. Obrigado pela colaboração de todos!
 
-🚚💨 — Base Zé Doca
+🚚💨 — WL Transportes
       `;
       div.textContent = mensagemFinal;
     }
