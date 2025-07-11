@@ -18,7 +18,7 @@
     }
 
     .container {
-      max-width: 700px;
+      max-width: 750px;
       margin: auto;
       background: #fff;
       padding: 20px;
@@ -72,6 +72,14 @@
       color: blue;
       font-weight: bold;
     }
+
+    #mensagemConvocacao, #mensagemFinal {
+      margin-top: 15px;
+      background: #e0f7fa;
+      padding: 10px;
+      border-radius: 6px;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
@@ -90,6 +98,19 @@
 
     <h3>Selecionados para o dia:</h3>
     <ul id="listaSelecionados"></ul>
+
+    <hr />
+
+    <h3>Gerar mensagem de convocação de voluntários:</h3>
+    <input type="number" id="voluntariosInput" placeholder="Ex: 5" min="1"/>
+    <button onclick="gerarMensagemConvocacao()">Gerar Mensagem</button>
+    <div id="mensagemConvocacao"></div>
+
+    <hr />
+
+    <h3>Gerar mensagem final para os entregadores do dia:</h3>
+    <button onclick="gerarMensagemFinal()">Gerar Mensagem Final</button>
+    <div id="mensagemFinal"></div>
   </div>
 
   <script>
@@ -158,6 +179,56 @@
         li.innerHTML = `${nome} ${ajudaram.includes(nome) ? '<span class="ajudou">(Ajudou)</span>' : '<span class="sorteado">(Sorteado)</span>'}`;
         ul.appendChild(li);
       });
+    }
+
+    function gerarMensagemConvocacao() {
+      const quantidade = parseInt(document.getElementById("voluntariosInput").value);
+      const div = document.getElementById("mensagemConvocacao");
+
+      if (isNaN(quantidade) || quantidade < 1) {
+        div.innerHTML = "<strong>Por favor, digite um número válido de voluntários.</strong>";
+        return;
+      }
+
+      const mensagem = `
+📣 CONVOCAÇÃO DE VOLUNTÁRIOS – BASE ZÉ DOCA
+
+Bom dia, pessoal!
+
+Hoje vamos precisar de ${quantidade} entregadores voluntários para ajudar na separação da carga, assim que ela chegar.
+
+⚠️ A ajuda é *voluntária* e não é obrigatória, mas lembrando que:
+
+✅ *Quem vier ajudar terá prioridade para rodar hoje.*
+📦 A escala final depende da quantidade de pacotes que chegar.
+
+Quem puder vir ajudar, responda aqui no grupo ou venha direto à base quando a carga chegar.
+
+Contamos com a força de vocês! 💪🚚
+      `;
+      div.textContent = mensagem;
+    }
+
+    function gerarMensagemFinal() {
+      const div = document.getElementById("mensagemFinal");
+
+      if (selecionados.length === 0) {
+        div.innerHTML = "<strong>Nenhum entregador foi selecionado ainda.</strong>";
+        return;
+      }
+
+      const nomesFormatados = selecionados.map((n, i) => `${i + 1}. ${n}`).join('\n');
+
+      const mensagemFinal = `
+📦 ENTREGADORES ESCALADOS PARA HOJE:
+
+${nomesFormatados}
+
+Por favor, estejam atentos à separação e à saída. Obrigado pela colaboração de todos!
+
+🚚💨 — Base Zé Doca
+      `;
+      div.textContent = mensagemFinal;
     }
   </script>
 </body>
