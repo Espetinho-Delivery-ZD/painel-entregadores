@@ -228,26 +228,28 @@ Contamos com a força de vocês! 💪🚚`;
 
 
     function gerarMensagemFinal() {
-      const div = document.getElementById("mensagemFinal");
+  const div = document.getElementById("mensagemFinal");
 
-      if (selecionados.length === 0) {
-        div.innerHTML = "<strong>Nenhum entregador foi selecionado ainda.</strong>";
-        return;
-      }
+  if (selecionados.length === 0) {
+    div.innerHTML = "<strong>Nenhum entregador foi selecionado ainda.</strong>";
+    return;
+  }
 
-      const nomesFormatados = selecionados.map((n, i) => `${i + 1}. ${n}`).join('\n');
+  const nomesFormatados = selecionados.map((n, i) => `*${i + 1}.* ${n}`).join('\n');
 
-      const mensagemFinal = `
-📦 ENTREGADORES ESCALADOS PARA HOJE – WL TRANSPORTES:
+  const mensagemFinal = 
+`📦 *ENTREGADORES ESCALADOS PARA HOJE – WL TRANSPORTES:*
 
 ${nomesFormatados}
 
-Por favor, estejam atentos à separação e à saída. Obrigado pela colaboração de todos!
+🕒 Fiquem atentos à separação e saída. 
+🙌 Agradecemos o empenho e colaboração de todos!
 
-🚚💨 — WL Transportes
-      `;
-      div.textContent = mensagemFinal;
-    }
+🚚💨 — WL Transportes`;
+
+  div.innerHTML = `<textarea style="width:100%; height:220px; border-radius:6px;">${mensagemFinal}</textarea>`;
+}
+
   </script>
 </body>
 </html>
